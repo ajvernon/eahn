@@ -8,14 +8,15 @@ class Player
 public:
     sf::Sprite sprite;
     sf::Texture texture;
+    sf::View view;
     void setSprite();
-    bool isMoving = 0;
-    bool facing = 0;
-    int runCycle = 0;
-    void movement();
+    bool isMoving;
+    bool facing;
+    int runCycle;
     void stopMove();
     void faceLeft();
     void faceRight();
     void characterControl();
+    void rCycle();
 };
 #endif

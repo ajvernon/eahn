@@ -90,3 +90,7 @@ long double angleBetweenVectors (Vector input1, Vector input2){ // This function
         angle = acos(((scalar)/(input1Mag*input2Mag)));
     return angle;
 }
+
+void Vector::addValues (long double x, long double y) {
+    setValues((xComponent + x), (yComponent + y));
+}

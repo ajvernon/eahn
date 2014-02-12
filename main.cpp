@@ -8,7 +8,7 @@ using namespace std;
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(512, 480), "Eahn", sf::Style::Close);
-    window.setFramerateLimit(30);
+    window.setVerticalSyncEnabled(true);
     sf::Clock clock;
     Vector world(0,0);
     Player firstPlayer;
@@ -30,7 +30,6 @@ int main()
         window.draw(firstPlayer.sprite);
         window.display();
     }
-
-
-    return 0;
+    movementThread.wait();
+    return(0);
 }

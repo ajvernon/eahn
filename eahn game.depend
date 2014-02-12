@@ -362,3 +362,27 @@
 1392231407 c:\users\anthony\documents\coding stuff\eahn game\player.hpp
 	<SFML/Graphics.hpp>
 
+1392243216 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\main.cpp
+	<iostream>
+	<cmath>
+	<SFML/Graphics.hpp>
+	<vectors.hpp>
+	<player.hpp>
+
+1392243728 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\vectors.cpp
+	<iostream>
+	<cmath>
+	<vectors.hpp>
+
+1392243084 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\player.cpp
+	<iostream>
+	<cmath>
+	<vectors.hpp>
+	<player.hpp>
+	<SFML/Graphics.hpp>
+
+1392243802 c:\users\anthony\documents\coding stuff\eahn game\eahn\vectors.hpp
+
+1392243288 c:\users\anthony\documents\coding stuff\eahn game\eahn\player.hpp
+	<SFML/Graphics.hpp>
+
