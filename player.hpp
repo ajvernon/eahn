@@ -13,6 +13,7 @@ public:
     bool isMoving;
     bool facing;
     int runCycle;
+    bool inControl;
     void stopMove();
     void faceLeft();
     void faceRight();

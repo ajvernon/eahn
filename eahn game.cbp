@@ -30,13 +30,13 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="C:/SFML-2.1/include" />
+			<Add directory="../SFML-2.1/include" />
 		</Compiler>
 		<Linker>
 			<Add library="sfml-graphics" />
 			<Add library="sfml-window" />
 			<Add library="sfml-system" />
-			<Add directory="C:/SFML-2.1/lib" />
+			<Add directory="../SFML-2.1/lib" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Unit filename="player.cpp" />

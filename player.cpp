@@ -40,48 +40,65 @@ void Player::faceRight(){
 void Player::rCycle() {
     if (runCycle == 0)
     {
-        sprite.setTextureRect(sf::IntRect(190, 11, 24, 22));
+        sprite.setTextureRect(sf::IntRect(190, 10, 24, 23));
         runCycle = runCycle + 1;
+        sf::sleep(sf::milliseconds(60));
     };
 
     if (runCycle == 1)
     {
         sprite.setTextureRect(sf::IntRect(217, 10, 17, 24));
         runCycle = runCycle + 1;
+        sf::sleep(sf::milliseconds(60));
     };
 
     if (runCycle == 2)
     {
-        sprite.setTextureRect(sf::IntRect(238, 12, 21, 22));
+        sprite.setTextureRect(sf::IntRect(238, 10, 21, 24));
+        runCycle = runCycle + 1;
+        sf::sleep(sf::milliseconds(60));
+    };
+
+    if (runCycle == 3)
+    {
+        sprite.setTextureRect(sf::IntRect(217, 10, 17, 24));
         runCycle = 0;
+        sf::sleep(sf::milliseconds(60));
     };
 }
 
 
 void Player::characterControl(){
-    bool inControl = 1;
+    inControl = 1;
 
     while (inControl){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-            if (!facing)
+            if (!facing){
+                stopMove();
                 faceLeft();
-            sprite.move(-5,0);
-            position.addValues(-5, 0);
+            }
+            sprite.move(-20,0);
+            position.addValues(-20, 0);
+            sf::sleep(sf::milliseconds(10));
             rCycle();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-            if (facing)
+            if (facing){
+                stopMove();
                 faceRight();
-            sprite.move(5,0);
-            position.addValues(5, 0);
+            }
+            sprite.move(20,0);
+            position.addValues(20, 0);
+            sf::sleep(sf::milliseconds(100));
             rCycle();
         }
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             stopMove();
         }
         view.setCenter(position.publicX, position.publicY);
-        sf::sleep(sf::milliseconds(60));
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            inControl = 0;
+        }
     }
-
 }

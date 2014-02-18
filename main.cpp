@@ -30,6 +30,6 @@ int main()
         window.draw(firstPlayer.sprite);
         window.display();
     }
-    movementThread.wait();
+    firstPlayer.inControl = false;
     return(0);
 }
