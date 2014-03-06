@@ -21,10 +21,6 @@ void Player::setSprite(){
     runCycle = 0;
 }
 
-void Player::stopMove (){
-    sprite.setTextureRect(sf::IntRect(103, 10, 21, 24));
-}
-
 void Player::faceLeft(){
     facing = 1;
     sprite.scale(-1,1);
@@ -42,63 +38,113 @@ void Player::rCycle() {
     {
         sprite.setTextureRect(sf::IntRect(190, 10, 24, 23));
         runCycle = runCycle + 1;
-        sf::sleep(sf::milliseconds(60));
+        sf::sleep(sf::milliseconds(120));
     };
 
     if (runCycle == 1)
     {
         sprite.setTextureRect(sf::IntRect(217, 10, 17, 24));
         runCycle = runCycle + 1;
-        sf::sleep(sf::milliseconds(60));
+        sf::sleep(sf::milliseconds(120));
     };
 
     if (runCycle == 2)
     {
         sprite.setTextureRect(sf::IntRect(238, 10, 21, 24));
         runCycle = runCycle + 1;
-        sf::sleep(sf::milliseconds(60));
+        sf::sleep(sf::milliseconds(120));
     };
 
     if (runCycle == 3)
     {
         sprite.setTextureRect(sf::IntRect(217, 10, 17, 24));
         runCycle = 0;
-        sf::sleep(sf::milliseconds(60));
+        sf::sleep(sf::milliseconds(120));
     };
 }
 
+void Player::movement(long double xMove,long double yMove){
+    if ((xMove == 0) && (yMove == 0)){
+        velocity.setValues(0,0);
+    }
+
+    if (velocity.publicX == 0) {
+        velocity.addValues(xMove, 0);
+    }
+    if (velocity.publicY == 0) {
+        velocity.addValues(0, yMove);
+    }
+    position.addValues(velocity.publicX, velocity.publicY);
+    //velocity.addValues(0, -1);
+
+}
+
+void Player::spriteDraw (){
+    if (!isSpriteSet){
+        setSprite();
+        beingDrawn = 1;
+    }
+
+    while (beingDrawn){
+    if ((velocity.publicX == 0) && (velocity.publicY == 0)){
+        sprite.setTextureRect(sf::IntRect(103, 10, 21, 24));
+    };
+    if (velocity.publicX > 0)
+    {
+        //if (!facing){
+        //    sprite.setTextureRect(sf::IntRect(103, 10, 21, 24));
+         //   faceLeft();
+        if (facing){
+            sprite.setTextureRect(sf::IntRect(103, 10, 21, 24));
+            faceRight();
+        }
+        rCycle();
+    };
+    if (velocity.publicX < 0)
+    {
+        if (!facing){
+            sprite.setTextureRect(sf::IntRect(103, 10, 21, 24));
+            faceLeft();
+        };
+
+        rCycle();
+    }
+    sprite.move(velocity.publicX,velocity.publicY);
+    }
+}
 
 void Player::characterControl(){
     inControl = 1;
 
+    sf::Mutex mutex;
+
+
     while (inControl){
+        mutex.lock();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
             if (!facing){
-                stopMove();
-                faceLeft();
+                movement(0,0);
             }
-            sprite.move(-20,0);
-            position.addValues(-20, 0);
-            sf::sleep(sf::milliseconds(10));
-            rCycle();
+            movement(-20, 0);
+            //sf::sleep(sf::milliseconds(10));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
             if (facing){
-                stopMove();
-                faceRight();
+                movement(0,0);
             }
-            sprite.move(20,0);
-            position.addValues(20, 0);
-            sf::sleep(sf::milliseconds(100));
-            rCycle();
+            movement(20, 0);
+            //sf::sleep(sf::milliseconds(10));
         }
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            stopMove();
+            movement(0,0);
+
         }
-        view.setCenter(position.publicX, position.publicY);
+        //view.setCenter(position.publicX, position.publicY);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             inControl = 0;
         }
+        mutex.unlock();
+        //spriteDraw();
     }
 }

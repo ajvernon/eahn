@@ -12,10 +12,11 @@ int main()
     sf::Clock clock;
     Vector world(0,0);
     Player firstPlayer;
-    firstPlayer.setSprite();
 
     sf::Thread movementThread(&Player::characterControl, &firstPlayer);
+    sf::Thread playerDrawThread(&Player::spriteDraw, &firstPlayer);
     movementThread.launch();
+    playerDrawThread.launch();
 
     while (window.isOpen())
     {
@@ -31,5 +32,6 @@ int main()
         window.display();
     }
     firstPlayer.inControl = false;
+    firstPlayer.beingDrawn = false;
     return(0);
 }

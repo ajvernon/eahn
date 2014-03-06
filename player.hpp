@@ -10,14 +10,18 @@ public:
     sf::Texture texture;
     sf::View view;
     void setSprite();
+    bool isSpriteSet;
+    bool beingDrawn;
     bool isMoving;
     bool facing;
+    bool inAir;
     int runCycle;
     bool inControl;
-    void stopMove();
     void faceLeft();
     void faceRight();
+    void movement(long double, long double);
     void characterControl();
     void rCycle();
+    void spriteDraw();
 };
 #endif

@@ -386,7 +386,7 @@
 1392243288 c:\users\anthony\documents\coding stuff\eahn game\eahn\player.hpp
 	<SFML/Graphics.hpp>
 
-1392724113 source:h:\final project\eahn\main.cpp
+1394113147 source:h:\final project\eahn\main.cpp
 	<iostream>
 	<cmath>
 	<SFML/Graphics.hpp>
@@ -729,11 +729,18 @@
 
 1392244346 h:\final project\eahn\vectors.hpp
 
-1392724093 h:\final project\eahn\player.hpp
+1393934044 h:\final project\eahn\player.hpp
 	<SFML/Graphics.hpp>
 
 1392244346 source:h:\final project\eahn\vectors.cpp
 	<iostream>
 	<cmath>
 	<vectors.hpp>
+
+1393934214 source:h:\final project\eahn\player.cpp
+	<iostream>
+	<cmath>
+	<vectors.hpp>
+	<player.hpp>
+	<SFML/Graphics.hpp>
 
