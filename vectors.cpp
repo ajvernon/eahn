@@ -94,3 +94,7 @@ long double angleBetweenVectors (Vector input1, Vector input2){ // This function
 void Vector::addValues (long double x, long double y) {
     setValues((xComponent + x), (yComponent + y));
 }
+
+void Vector::addVector (Vector input1){
+    setValues((xComponent + input1.publicX), (yComponent + input1.publicY));
+}

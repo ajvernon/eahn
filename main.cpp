@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vectors.hpp>
 #include <player.hpp>
+#include <entities.hpp>
 using namespace std;
 
 int main()

@@ -15,5 +15,6 @@ public:
     long double angle ();                       // This function determines the angle of the vector
     void eval();                                // This function prints out the data associated with the vector
     void addValues(long double, long double);   // This function adds the two arguments to the associated components
+    void addVector(Vector);
 };
 #endif

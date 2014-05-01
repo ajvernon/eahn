@@ -3,11 +3,13 @@
 #include <vectors.hpp>
 #include <player.hpp>
 #include <SFML/Graphics.hpp>
+using namespace std;
 
 void Player::setSprite(){
     if (!texture.loadFromFile("megaman.png"))
     {
-        // error of some sort
+        cout << "Oh shit! megaman.png failed to load! You might want to look into that.";
+        exit(EXIT_FAILURE);
     };
     sprite.setTexture(texture);
     sprite.setTextureRect(sf::IntRect(103, 10, 21, 24));
@@ -63,17 +65,42 @@ void Player::rCycle() {
     };
 }
 
-void Player::movement(long double xMove,long double yMove){
+void Player::movement(long double xMove,long double yMove, long double xCap,long double yCap){
     if ((xMove == 0) && (yMove == 0)){
         velocity.setValues(0,0);
+        acceleration.setValues(0,0);
+    }
+    if (acceleration.publicX != xMove){
+        acceleration.setValues(xMove,acceleration.publicY);
+    }
+    if (acceleration.publicY != yMove){
+        acceleration.setValues(acceleration.publicX,yMove);
     }
 
-    if (velocity.publicX == 0) {
+    if (xCap >= 0){
+        if ((velocity.publicX + acceleration.publicX) >= xCap){
+            velocity.setValues(xCap,velocity.publicY);
+        }
+        if ((velocity.publicX + acceleration.publicX) <= xCap) {
+            velocity.addValues(acceleration.publicX,velocity.publicY);
+        }
+    }
+    if (xCap < 0){
+        if ((velocity.publicX + acceleration.publicX) <= xCap){
+            velocity.setValues(xCap,velocity.publicY);
+        }
+        if ((velocity.publicX + acceleration.publicX) >= xCap) {
+            velocity.addValues(acceleration.publicX,velocity.publicY);
+        }
+    }
+
+
+    /*if (velocity.publicX == 0) {
         velocity.addValues(xMove, 0);
     }
     if (velocity.publicY == 0) {
         velocity.addValues(0, yMove);
-    }
+    }*/
     position.addValues(velocity.publicX, velocity.publicY);
     //velocity.addValues(0, -1);
 
@@ -91,10 +118,7 @@ void Player::spriteDraw (){
     };
     if (velocity.publicX > 0)
     {
-        //if (!facing){
-        //    sprite.setTextureRect(sf::IntRect(103, 10, 21, 24));
-         //   faceLeft();
-        if (facing){
+            if (facing){
             sprite.setTextureRect(sf::IntRect(103, 10, 21, 24));
             faceRight();
         }
@@ -116,27 +140,27 @@ void Player::spriteDraw (){
 void Player::characterControl(){
     inControl = 1;
 
-    sf::Mutex mutex;
+    //sf::Mutex mutex;
 
 
     while (inControl){
-        mutex.lock();
+        //mutex.lock();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
             if (!facing){
-                movement(0,0);
+                movement(0,0,0,0);
             }
-            movement(-20, 0);
+            movement(-1, 0, -20, 0);
             //sf::sleep(sf::milliseconds(10));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
             if (facing){
-                movement(0,0);
+                movement(0,0,0,0);
             }
-            movement(20, 0);
+            movement(1, 0, 20, 0);
             //sf::sleep(sf::milliseconds(10));
         }
         if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-            movement(0,0);
+            movement(0,0,0,0);
 
         }
         //view.setCenter(position.publicX, position.publicY);
@@ -144,7 +168,7 @@ void Player::characterControl(){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             inControl = 0;
         }
-        mutex.unlock();
+        //mutex.unlock();
         //spriteDraw();
     }
 }

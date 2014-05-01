@@ -5,6 +5,7 @@
 class Player
 {   Vector position;
     Vector velocity;
+    Vector acceleration;
 public:
     sf::Sprite sprite;
     sf::Texture texture;
@@ -19,7 +20,7 @@ public:
     bool inControl;
     void faceLeft();
     void faceRight();
-    void movement(long double, long double);
+    void movement(long double, long double, long double, long double);
     void characterControl();
     void rCycle();
     void spriteDraw();
