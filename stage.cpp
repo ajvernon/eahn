@@ -5,6 +5,7 @@
 #include <entities.hpp>
 #include <stage.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 using namespace std;
 
 void stage::initStage(stageData Input) {
@@ -13,6 +14,7 @@ void stage::initStage(stageData Input) {
         stageScreens[i].initScreen(Input.Screens[i]);
         //stageScreens[i].platformNumber = Input.screenPlatformNumber[i];
     };
+
 }
 
 void screen::initScreen(screenData Input){

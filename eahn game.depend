@@ -362,22 +362,24 @@
 1392231407 c:\users\anthony\documents\coding stuff\eahn game\player.hpp
 	<SFML/Graphics.hpp>
 
-1399211644 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\main.cpp
+1399226912 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\main.cpp
 	<iostream>
 	<cmath>
+	<SFML/System.hpp>
 	<SFML/Graphics.hpp>
 	<vectors.hpp>
 	<player.hpp>
 	<entities.hpp>
 	<stage.hpp>
 	<logic.hpp>
+	<window.hpp>
 
-1399211615 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\vectors.cpp
+1399217887 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\vectors.cpp
 	<iostream>
 	<cmath>
 	<vectors.hpp>
 
-1399202354 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\player.cpp
+1399211929 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\player.cpp
 	<iostream>
 	<cmath>
 	<vectors.hpp>
@@ -766,14 +768,15 @@
 1398766290 h:\final project\eahn\\entities.hpp
 	<SFML/Graphics.hpp>
 
-1399211732 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\entities.cpp
+1399226820 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\entities.cpp
 	<iostream>
 	<cmath>
 	<vectors.hpp>
 	<entities.hpp>
 	<SFML/Graphics.hpp>
+	<SFML/System.hpp>
 
-1399211446 c:\users\anthony\documents\coding stuff\eahn game\eahn\entities.hpp
+1399226839 c:\users\anthony\documents\coding stuff\eahn game\eahn\entities.hpp
 	<SFML/Graphics.hpp>
 
 1367997278 c:\users\anthony\documents\coding stuff\eahn game\sfml-2.1\include\sfml\graphics.hpp
@@ -1110,7 +1113,7 @@
 	<string>
 	<vector>
 
-1399211574 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\logic.cpp
+1399227112 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\logic.cpp
 	<iostream>
 	<string>
 	<cmath>
@@ -1119,12 +1122,13 @@
 	<stage.hpp>
 	<logic.hpp>
 	<SFML/Graphics.hpp>
+	<SFML/System.hpp>
 
 1399209830 c:\users\anthony\documents\coding stuff\eahn game\eahn\stage.hpp
 
-1399208704 c:\users\anthony\documents\coding stuff\eahn game\eahn\logic.hpp
+1399226075 c:\users\anthony\documents\coding stuff\eahn game\eahn\logic.hpp
 
-1399211593 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\stage.cpp
+1399217894 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\stage.cpp
 	<iostream>
 	<string>
 	<cmath>
@@ -1132,4 +1136,14 @@
 	<entities.hpp>
 	<stage.hpp>
 	<SFML/Graphics.hpp>
+	<SFML/System.hpp>
+
+1399226370 c:\users\anthony\documents\coding stuff\eahn game\eahn\window.hpp
+
+1399227102 source:c:\users\anthony\documents\coding stuff\eahn game\eahn\window.cpp
+	<iostream>
+	<cmath>
+	<SFML/System.hpp>
+	<SFML/Graphics.hpp>
+	<vectors.hpp>
 

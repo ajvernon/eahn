@@ -24,12 +24,16 @@ public:
 };
 
 class playerEntity {
-    entity Player;
+
 public:
+    entity Player;
     int health;
     int lives;
     void initPlayer(Vector);
     void movement();
+    Vector publicPos;
+    void PublicUpdateVectors(Vector, Vector, Vector);
+    void updateSprite(bool,bool,bool,bool,bool);
 };
 
 class enemyEntity {

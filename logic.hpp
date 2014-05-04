@@ -5,6 +5,12 @@ class playerMovement{
 
 public:
     bool inControl;
+    bool facing; // 1 is right, 0 is left
+    bool moveLeft;
+    bool faceLeft;
+    bool moveRight;
+    bool faceRight;
+    bool Jumping;
     void playerCollision();
     void playerControl();
 };
@@ -15,4 +21,9 @@ public:
     void enemyCollision();
 };
 
+class logicClass{
+
+public:
+    void gameLogic();
+};
 #endif

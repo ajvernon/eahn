@@ -3,6 +3,7 @@
 #include <vectors.hpp>
 #include <entities.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 using namespace std;
 
 // maybe I should actually write some comments, that would be good
@@ -47,8 +48,57 @@ void playerEntity::initPlayer(Vector initPos) {
     health = 100;
     lives = 2;
     Player.initialiseEntity(initPos.publicX,initPos.publicY,32,1,1,32,32);
+    publicPos.setValues(Player.publicPos.publicX,Player.publicPos.publicY);
     Player.textureFilename = "megaman.png";
     Player.setSprite();
+}
+
+void playerEntity::updateSprite(bool faceLeft, bool faceRight, bool moveLeft, bool moveRight, bool facing){
+    if ((faceLeft) && (facing)){
+        if (moveLeft){
+            Player.sprite.setTextureRect(sf::IntRect(Player.gridCalc(1), Player.gridCalc(2), 32, 32));
+            Player.sprite.scale(sf::Vector2f(-1, 0));
+            Player.sprite.move(32,0);
+        }
+        else {
+            Player.sprite.scale(sf::Vector2f(-1, 0));
+            Player.sprite.move(32,0);
+            Player.sprite.setTextureRect(sf::IntRect(Player.gridCalc(1), Player.gridCalc(1), 32, 32));
+        }
+    }
+    if ((faceLeft) && (!facing)){
+        if (moveLeft){
+            Player.sprite.setTextureRect(sf::IntRect(Player.gridCalc(1), Player.gridCalc(2), 32, 32));
+        }
+        else {
+            Player.sprite.setTextureRect(sf::IntRect(Player.gridCalc(1), Player.gridCalc(1), 32, 32));
+        }
+    }
+
+    if ((faceRight) && (!facing)){
+        if (moveRight){
+            Player.sprite.setTextureRect(sf::IntRect(Player.gridCalc(1), Player.gridCalc(2), 32, 32));
+            Player.sprite.scale(sf::Vector2f(-1, 0));
+            Player.sprite.move(-32,0);
+        }
+        else {
+            Player.sprite.scale(sf::Vector2f(-1, 0));
+            Player.sprite.move(-32,0);
+            Player.sprite.setTextureRect(sf::IntRect(Player.gridCalc(1), Player.gridCalc(1), 32, 32));
+        }
+    }
+    if ((faceRight) && (facing)){
+        if (moveRight){
+            Player.sprite.setTextureRect(sf::IntRect(Player.gridCalc(1), Player.gridCalc(2), 32, 32));
+        }
+        else {
+            Player.sprite.setTextureRect(sf::IntRect(Player.gridCalc(1), Player.gridCalc(1), 32, 32));
+        }
+    }
+}
+
+void playerEntity::PublicUpdateVectors(Vector inputPos, Vector inputVel, Vector inputAcc){
+    Player.updateVectors(inputPos, inputVel, inputAcc);
 }
 
 void enemyEntity::initEnemy(int HP, string texFile) {
