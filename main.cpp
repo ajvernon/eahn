@@ -4,6 +4,8 @@
 #include <vectors.hpp>
 #include <player.hpp>
 #include <entities.hpp>
+#include <stage.hpp>
+#include <logic.hpp>
 using namespace std;
 
 int main()
@@ -14,11 +16,17 @@ int main()
     sf::Clock clock;
     Vector world(0,0);
     Player firstPlayer;
+    playerMovement firstActualPlayer;
 
     sf::Thread movementThread(&Player::characterControl, &firstPlayer);
     sf::Thread playerDrawThread(&Player::spriteDraw, &firstPlayer);
     movementThread.launch();
     playerDrawThread.launch();
+
+    bool gameRunning = true;
+
+    sf::Thread gameLogicThread(gameLogic)
+    gameLogicThread.launch();
 
     while (window.isOpen())
     {
@@ -29,7 +37,7 @@ int main()
                 window.close();
         }
 
-        window.clear(sf::Color::Black);
+        window.clear(sf::Color::White);
         window.draw(firstPlayer.sprite);
         window.display();
     }

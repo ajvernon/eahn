@@ -5,6 +5,8 @@
 #include <SFML/Graphics.hpp>
 using namespace std;
 
+// WARNING THIS SHIT NEEDS TO BE RIPPED OUT AND REPLACED, IT'S HILARIOUSLY OUT OF DATE
+
 void Player::setSprite(){
     if (!texture.loadFromFile("megaman.png"))
     {
@@ -12,7 +14,7 @@ void Player::setSprite(){
         exit(EXIT_FAILURE);
     };
     sprite.setTexture(texture);
-    sprite.setTextureRect(sf::IntRect(103, 10, 21, 24));
+    sprite.setTextureRect(sf::IntRect((4*32), 0, 32, 32));
     sprite.setScale(2,2);
     position.setValues(256,240);
     sprite.setPosition(position.publicX,position.publicY);

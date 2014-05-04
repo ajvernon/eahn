@@ -4,9 +4,9 @@
 using namespace std;
 
 class entity {
-    Vector position;
-    Vector velocity;
-    Vector acceleration;
+    Vector position;        // These variables store the various bits of basic data each entity has,
+    Vector velocity;        // although a couple of them are useless for certain entities, it's much easier
+    Vector acceleration;    // to define them once here rather than to do it a trillion times.
     int collisionHeight;
     int collisionWidth;
     int imageSize;
@@ -19,6 +19,8 @@ public:
     void initialiseEntity(int, int, int, int, int, int, int);
     void setSprite();
     int gridCalc(int);
+    Vector publicPos;
+    void updateVectors(Vector, Vector, Vector);
 };
 
 class playerEntity {
@@ -26,7 +28,8 @@ class playerEntity {
 public:
     int health;
     int lives;
-    void initPlayer();
+    void initPlayer(Vector);
+    void movement();
 };
 
 class enemyEntity {
@@ -44,10 +47,11 @@ public:
 };
 
 class platformEntity {
-    entity Platform;
+    entity Platform[][20];
 public:
     int length;
     int height;
-    void initPlatform();
+    int type;
+    void initPlatform(int, int, int, int, int, int, string);
 };
 #endif
