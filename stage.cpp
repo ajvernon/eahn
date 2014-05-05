@@ -8,6 +8,8 @@
 #include <SFML/System.hpp>
 using namespace std;
 
+extern sf::Sprite *platformSprite[20][20];
+
 void stage::initStage(stageData Input) {
     int i = 0;
     while (i <= (Input.screenNumber -1)){
@@ -24,7 +26,7 @@ void screen::initScreen(screenData Input){
     int n = 0;
 
     while (n <= (Input.numberOfEnemies -1)){  // This initialises the enemies in the screen
-
+        n++;
     };
 
     n = 0;
@@ -33,5 +35,6 @@ void screen::initScreen(screenData Input){
         platforms[n].initPlatform(Input.platformLength[n], Input.platformHeight[n],
                                   Input.platformXPos[n], Input.platformYPos[n], Input.platformType[n],
                                   Input.platformSize[n], Input.screenImageFile);
+        n++;
     };
 }

@@ -7,6 +7,7 @@
 using namespace std;
 
 // maybe I should actually write some comments, that would be good
+extern sf::Sprite *platformSprite[20][20];
 
 int entity::gridCalc (int x) {
    int output;
@@ -14,9 +15,9 @@ int entity::gridCalc (int x) {
    return output;
 }
 
-void entity::initialiseEntity(int posX, int posY, int sizeOf, int initialGridX, int initialGridY, int colH, int colW) {
+void entity::initialiseEntity(long double posX, long double posY, int sizeOf, int initialGridX, int initialGridY, int colH, int colW) {
     position.setValues(posX,posY);
-    publicPos.setVector(position);
+    publicPos.setValues(posX, posY);
     velocity.setValues(0,0);
     acceleration.setValues(0,0);
     imageSize = sizeOf;
@@ -37,19 +38,30 @@ void entity::setSprite() {
     sprite.setScale(2,2);
 }
 
-void entity::updateVectors(Vector inputPos, Vector inputVel, Vector inputAcc){
+void entity::updatePosition(Vector inputPos){
     position.setVector(inputPos);
     publicPos.setVector(position);
+}
+
+void entity::updateVelocity(Vector inputVel){
     velocity.setVector(inputVel);
+}
+
+void entity::updateAcceleration(Vector inputAcc){
     acceleration.setVector(inputAcc);
 }
 
-void playerEntity::initPlayer(Vector initPos) {
+void playerEntity::initPlayer() {
+    const char s[] = {'m', 'e', 'g', 'a', 'm', 'a', 'n', '.', 'p', 'n', 'g', '\0'};
     health = 100;
     lives = 2;
-    Player.initialiseEntity(initPos.publicX,initPos.publicY,32,1,1,32,32);
+    Player.initialiseEntity(0,0,32,1,1,32,32);
     publicPos.setValues(Player.publicPos.publicX,Player.publicPos.publicY);
-    Player.textureFilename = "megaman.png";
+    for (int i=0; i<11; i++){
+        Player.textureFilename[i] = s[i];
+    }
+
+
     Player.setSprite();
 }
 
@@ -97,22 +109,21 @@ void playerEntity::updateSprite(bool faceLeft, bool faceRight, bool moveLeft, bo
     }
 }
 
-void playerEntity::PublicUpdateVectors(Vector inputPos, Vector inputVel, Vector inputAcc){
-    Player.updateVectors(inputPos, inputVel, inputAcc);
-}
-
-void enemyEntity::initEnemy(int HP, string texFile) {
+void enemyEntity::initEnemy(int HP, char texFile[20]) {
     health = HP;
-    Enemy.textureFilename = texFile;
+    for (int i=0; i<19; i++){
+        Enemy.textureFilename[i] = texFile[i];
+    }
+
 }
 
-void projectileEntity::initProjectile(int DMG, string texFile) {
+void projectileEntity::initProjectile(int DMG, char texFile[20]) {
     damage = DMG;
 
 }
 
 
-void platformEntity::initPlatform(int inputLength, int inputHeight, int inputXPos, int inputYPos, int inputType, int inputSize, string texFile) {
+void platformEntity::initPlatform(int inputLength, int inputHeight, int inputXPos, int inputYPos, int inputType, int inputSize, char texFile[20]) {
     length = inputLength;
     height = inputHeight;
     type = inputType;
@@ -160,8 +171,13 @@ void platformEntity::initPlatform(int inputLength, int inputHeight, int inputXPo
             }
 
             Platform[l][h].initialiseEntity((inputXPos + (l*inputSize)), (inputYPos + (h*inputSize)),inputSize,gridX,gridY,inputSize,inputSize);
-            Platform[l][h].textureFilename = texFile;
+
+            for (int i=0; i<18; i++){
+                Platform[l][h].textureFilename[i] = texFile[i];
+            }
+
             Platform[l][h].setSprite();
+            //*platformSprite[l][h] = Platform[l][h].sprite;
         }
         l = 0;
     }

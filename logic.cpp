@@ -9,7 +9,11 @@
 #include <SFML/System.hpp>
 using namespace std;
 
-sf::Sprite * playerSprite;
+extern sf::Sprite * playerSprite;
+class playerEntity;
+class stage;
+extern sf::Sprite *platformSprite[20][20];
+
 
 int passPointer(){
 
@@ -20,7 +24,7 @@ void playerMovement::playerCollision(){
 }
 
 void playerMovement::playerControl(){
-    while (inControl == true){
+    //while (inControl == true){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
             moveLeft = true;
             moveRight = false;
@@ -37,28 +41,31 @@ void playerMovement::playerControl(){
             moveLeft = false;
             moveRight = false;
         }
-    }
+    //}
     //if
 }
 
-void logicClass::gameLogic (){
+void gameLogic (){
     playerMovement firstActualPlayer;
-    firstActualPlayer.facing = true;
-
+    stageData testStageData;
     playerEntity ThePlayer;
+    stage testStage;
+    Vector playerPos, playerVel, playerAcc;
 
+    firstActualPlayer.facing = true;
     firstActualPlayer.inControl = true;
-    sf::Thread playerMovementThread (&playerMovement::playerControl, &firstActualPlayer);
-    playerMovementThread.launch();
-
-
-
-    stageData testStageData;                            // THIS ISN'T EVEN MY DATA'S FINAL FORM
+    sf::Mutex mutex;
+    mutex.lock();
+    const char t[] = "test.png";
+                                            // THIS ISN'T EVEN MY DATA'S FINAL FORM
     testStageData.screenNumber = 1;
-    testStageData.playerStart.setValues(10,100);
+    testStageData.playerStartX = 10;
+    testStageData.playerStartY = 100;
     testStageData.checkpointScreen[0] = 1;
     testStageData.checkpointPosition[0].setValues(10,100);
-    testStageData.stageImageFile = "test.png";
+    for (int i=0; i<9; i++){
+        testStageData.stageImageFile[i] = t[i];
+    }
 
     testStageData.Screens[0].height = 480;
     testStageData.Screens[0].length = 512;
@@ -78,32 +85,42 @@ void logicClass::gameLogic (){
     testStageData.Screens[0].platformYPos[1] = 50;
     testStageData.Screens[0].platformType[1] = 0;
 
-    testStageData.Screens[0].screenImageFile = testStageData.stageImageFile;
+    for (int i=0; i<9; i++){
+        testStageData.Screens[0].screenImageFile[i] = testStageData.stageImageFile[i];
+    }
 
-    stage testStage;
+
     testStage.initStage(testStageData);
 
-    ThePlayer.initPlayer(testStageData.playerStart);
+    ThePlayer.initPlayer();
 
-    Vector playerPos, playerVel, playerAcc;
-    playerPos.setValues(ThePlayer.publicPos.publicX, ThePlayer.publicPos.publicY);
+
+    playerPos.setValues(10, 100);
+    ThePlayer.Player.updatePosition(playerPos);
     playerVel.setValues(0,0);
     playerAcc.setValues(0,0);
     int maxVelX;
     int maxVelY;
 
-    playerSprite = &ThePlayer.Player.sprite;
+//    playerSprite = &ThePlayer.Player.sprite;
+
+    mutex.unlock();
+
+    //sf::Thread playerMovementThread (&playerMovement::playerControl, &firstActualPlayer);
+    //playerMovementThread.launch();
 
     bool gameRunning = true;
     sf::Clock clock;
     sf::Time elapsed;
     while (gameRunning == true){
+        firstActualPlayer.playerControl();
         elapsed = clock.getElapsedTime();
         cout << elapsed.asSeconds() << "\n";
     if (elapsed.asSeconds()>=(1/24)){
+        mutex.lock();
         if (firstActualPlayer.moveLeft)
         {
-            if ((firstActualPlayer.Jumping) && playerAcc.publicY == 0){
+            if ((firstActualPlayer.Jumping) && ((playerAcc.publicY >= -0.1) || (playerAcc.publicY <= 0.1))){
                 playerAcc.setValues(-10,-10);
                 playerVel.addValues(0,50);
                 maxVelX = -30;
@@ -116,7 +133,7 @@ void logicClass::gameLogic (){
         }
         if (firstActualPlayer.moveRight)
         {
-            if ((firstActualPlayer.Jumping) && playerAcc.publicY == 0){
+            if ((firstActualPlayer.Jumping) && ((playerAcc.publicY >= -0.1) || (playerAcc.publicY <= 0.1)) == 0){
                 playerAcc.setValues(10,-10);
                 playerVel.addValues(0,50);
                 maxVelX = 30;
@@ -128,7 +145,7 @@ void logicClass::gameLogic (){
             }
         }
 
-        if ((playerVel.publicY == 0) && (playerAcc.publicY == 0)) {firstActualPlayer.Jumping = false;}
+        if (((playerVel.publicY >= -0.1) || (playerVel.publicY <= 0.1)) && ((playerAcc.publicY >= -0.1) || (playerAcc.publicY <= 0.1))) {firstActualPlayer.Jumping = false;}
 
         if (firstActualPlayer.faceLeft){
             if (playerVel.publicX <= maxVelX){
@@ -139,7 +156,8 @@ void logicClass::gameLogic (){
                 playerVel.setValues(playerVel.publicX,maxVelY);
                 playerAcc.setValues(playerAcc.publicX,0);
             }
-            playerVel.addValues((playerAcc.publicX/24),(playerAcc.publicY/24));
+            playerVel.addValues((playerAcc.publicX),(playerAcc.publicY));
+            playerPos.addValues(playerVel.publicX, playerVel.publicY);
         }
 
         if (firstActualPlayer.faceLeft){
@@ -151,11 +169,16 @@ void logicClass::gameLogic (){
                 playerVel.setValues(playerVel.publicX,maxVelY);
                 playerAcc.setValues(playerAcc.publicX,0);
             }
-            playerVel.addValues((playerAcc.publicX/24),(playerAcc.publicY/24));
+            playerVel.addValues((playerAcc.publicX),(playerAcc.publicY));
+            playerPos.addValues(playerVel.publicX, playerVel.publicY);
         }
-        ThePlayer.PublicUpdateVectors(playerPos,playerVel,playerAcc);
-        ThePlayer.updateSprite(firstActualPlayer.faceLeft,firstActualPlayer.faceRight,firstActualPlayer.moveLeft,firstActualPlayer.moveRight,firstActualPlayer.facing);
+        ThePlayer.Player.updatePosition(playerPos);
+        //ThePlayer.updateSprite(firstActualPlayer.faceLeft,firstActualPlayer.faceRight,firstActualPlayer.moveLeft,firstActualPlayer.moveRight,firstActualPlayer.facing);
         clock.restart();
+        mutex.unlock();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            gameRunning = false;
+        }
         }
     }
 }
